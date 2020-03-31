@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# MPLAB specific
+/build/
+/dist/
+/nbproject/Makefile*
+/nbproject/*bash
+/nbproject/private/
