@@ -6,7 +6,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
         <itemPath>src/FreeRTOSConfig.h</itemPath>
-        <itemPath>../../dev/c/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portmacro.h</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portmacro.h</itemPath>
       </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
@@ -31,11 +31,11 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
-        <itemPath>../../dev/c/FreeRTOS-Kernel/tasks.c</itemPath>
-        <itemPath>../../dev/c/FreeRTOS-Kernel/list.c</itemPath>
-        <itemPath>../../dev/c/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/port.c</itemPath>
-        <itemPath>../../dev/c/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portasm_PIC24.S</itemPath>
-        <itemPath>../../dev/c/FreeRTOS-Kernel/portable/MemMang/heap_1.c</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/portable/MemMang/heap_1.c</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/list.c</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/port.c</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portasm_PIC24.S</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/tasks.c</itemPath>
       </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
@@ -125,7 +125,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="extra-include-directories"
-                  value="src;../../dev/c/FreeRTOS-Kernel/include;../../dev/c/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC"/>
+                  value="src;./src/FreeRTOS-Kernel/include;./src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>
