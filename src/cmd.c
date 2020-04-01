@@ -5,10 +5,14 @@
 #include <stdio.h>
 
 #include "constants.h"
+#include "FreeRTOSConfig.h"
+#include <FreeRTOS.h>
+#include <task.h>
 
 void ver(ParsedCmd *cmdp) {
-    printf("  ver: %d\n", APP_VERSION);
-    printf("build: %s\n", APP_BUILD);
+    printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);
+    printf("   FW: %d\n", APP_VERSION);
+    //printf("build: %s\n", APP_BUILD);
 }
 
 void info(ParsedCmd *cmdp) {

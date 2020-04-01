@@ -22,6 +22,7 @@
       </logicalFolder>
       <itemPath>src/cli.h</itemPath>
       <itemPath>src/cmd.h</itemPath>
+      <itemPath>src/hw.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -53,6 +54,7 @@
       <itemPath>src/cli.c</itemPath>
       <itemPath>src/cmd.c</itemPath>
       <itemPath>src/constants.h</itemPath>
+      <itemPath>src/hw.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -242,6 +244,7 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
