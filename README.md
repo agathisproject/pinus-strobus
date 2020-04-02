@@ -7,7 +7,7 @@ Agathis Management Controller - Software Implementation
     git clone <url>
     cd pinus-strobus
     git checkout <branch_name>
-    git submodule update
+    git submodule update --init --recursive
 
 ## with MPLAB
 
