@@ -9,20 +9,19 @@
 #define FCY (_XTAL_FREQ / 2)
 #include <libpic30.h>
 
+#include "agathis.h"
+#include "hw.h"
 #include "FreeRTOSConfig.h"
 #include <FreeRTOS.h>
 #include <task.h>
 #include <queue.h>
-
-#include "agathis.h"
-#include "hw.h"
 #include "cli/cli.h"
 
 void task_main(void *pvParameters) {
     while (1) {
-        LED_green(1);
+        GPIO_LED_Green(1);
         vTaskDelay(500);
-        LED_green(0);
+        GPIO_LED_Green(0);
         vTaskDelay(500);
     }
 }
@@ -44,7 +43,7 @@ void task_CLI(void *pvParameters) {
 int main(void) {
     // initialize the device
     SYSTEM_Initialize();
-    MGMT_NODE_Initialize();
+    MC_Initialize();
     __delay_ms(10);
     printf("boot OK\n");
     while (!UART1_IsTxDone()) {};
@@ -58,7 +57,7 @@ int main(void) {
                        tskIDLE_PRIORITY,
                        NULL);
     if (xRes != pdPASS) {
-        LED_red(1);
+        GPIO_LED_Red(1);
     }
 
     xRes = xTaskCreate(task_CLI,
@@ -68,7 +67,7 @@ int main(void) {
                        tskIDLE_PRIORITY,
                        NULL);
     if (xRes != pdPASS) {
-        LED_red(1);
+        GPIO_LED_Red(1);
     }
 
     printf("starting tasks\n");

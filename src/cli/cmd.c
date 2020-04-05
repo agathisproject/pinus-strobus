@@ -36,8 +36,8 @@ CliCmdReturn_t info(ParsedCmd_t *cmdp) {
         _info_SW();
     } else if (strncmp(cmdp->params[0], "hw", CLI_PARAM_SIZE) == 0) {
         _info_HW();
-    } else if (strncmp(cmdp->params[0], "node", CLI_PARAM_SIZE) == 0) {
-        MGMT_NODE_Show();
+    } else if (strncmp(cmdp->params[0], "mc", CLI_PARAM_SIZE) == 0) {
+        MC_Show();
     } else {
         return CMD_WRONG_PARAM;
     }
@@ -55,7 +55,7 @@ unsigned int Get_Cmd_Cnt() {
 }
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
-    {"info", "[sw|hw|node]", "show info", &info},
+    {"info", "[sw|hw|mc]", "show info", &info},
     {"show", "", "show ???", &show},
 };
 

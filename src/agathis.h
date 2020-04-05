@@ -12,18 +12,18 @@ typedef struct {
     uint8_t TMC; /**< Tree Management Controller enabled */
     uint8_t addr_d; /**< down-trunk management address */
     uint8_t addr_u; /**< up-trunk management address */
-} MgmtState;
+} MCState_t;
 
 #define NODE_MAX_CNT 16
 
 typedef struct {
     uint8_t type;
-} MgmtNode;
+} MCInfo_t;
 
-extern MgmtState MGMT;
+extern MCState_t MC;
 
-void MGMT_NODE_Initialize();
+void MC_Initialize();
 
-void MGMT_NODE_Show();
+void MC_Show();
 
 #endif /* AGATHIS_6PLS6RVRFVYEP7NX */

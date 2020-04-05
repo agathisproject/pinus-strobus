@@ -7,16 +7,16 @@
 #include "constants.h"
 #include "../mcc_generated_files/pin_manager.h"
 
-uint8_t Get_Addr_D() {
+uint8_t GPIO_Get_Addr_D() {
     // TODO:
     return 0;
 }
 
-void Set_Addr_U(uint8_t addr) {
+void GPIO_Set_Addr_U(uint8_t addr) {
     // TODO:
 }
 
-void LED_red(uint8_t state) {
+void GPIO_LED_Red(uint8_t state) {
     if (state == 0) {
         IO_RA0_SetLow();
     } else  {
@@ -24,7 +24,7 @@ void LED_red(uint8_t state) {
     }
 }
 
-void LED_green(uint8_t state) {
+void GPIO_LED_Green(uint8_t state) {
     if (state == 0) {
         IO_RA1_SetLow();
     } else {
@@ -32,7 +32,7 @@ void LED_green(uint8_t state) {
     }
 }
 
-void LED_blue(uint8_t state) {
+void GPIO_LED_Blue(uint8_t state) {
     if (state == 0) {
         IO_RC7_SetLow();
     } else {
