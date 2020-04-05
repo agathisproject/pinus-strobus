@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "cmd.h"
+#include "cli_types.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -27,7 +27,7 @@ void _info_HW() {
     printf("DEVREV: %#06x\n", devrev);
 }
 
-ECliCmdReturn info(ParsedCmd *cmdp) {
+CliCmdReturn_t info(ParsedCmd_t *cmdp) {
     if (cmdp->nParams != 1) {
         return CMD_WRONG_N;
     }
@@ -44,13 +44,19 @@ ECliCmdReturn info(ParsedCmd *cmdp) {
     return CMD_DONE;
 }
 
-ECliCmdReturn show(ParsedCmd *cmdp) {
+CliCmdReturn_t show(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
-static CliCmd _CMDS_ARRAY[CMD_CNT] = {
+#define CMD_CNT 2
+
+unsigned int Get_Cmd_Cnt() {
+    return CMD_CNT;
+}
+
+static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
     {"info", "[sw|hw|node]", "show info", &info},
     {"show", "", "show ???", &show},
 };
 
-CliCmd *CMDS = _CMDS_ARRAY;
+CliCmd_t *CMDS = _CMDS_ARRAY;

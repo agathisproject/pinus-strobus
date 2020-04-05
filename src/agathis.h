@@ -4,7 +4,7 @@
 #define AGATHIS_6PLS6RVRFVYEP7NX
 /** @file */
 
-#include "cli.h"
+#include <stdint.h>
 
 #define I2C_OFFSET 0x20
 

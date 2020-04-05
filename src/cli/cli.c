@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "cli.h"
+#include "cli_types.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #include "../mcc_generated_files/uart1.h"
-#include "cmd.h"
 
 static char _CLI_BUFF[CLI_BUFF_SIZE + 1] = "\0";
 
-static ParsedCmd _PARSED_CMD = {"\0", 0, {"\0", "\0", "\0", "\0"}};
+static ParsedCmd_t _PARSED_CMD = {"\0", 0, {"\0", "\0", "\0", "\0"}};
 
-void cli_get_cmd() {
+void CLI_Get_Cmd() {
     uint8_t byteIn;
     uint8_t cmdDone = 0;
     uint8_t idx = 0;
@@ -53,7 +53,7 @@ void cli_get_cmd() {
     }
 }
 
-uint8_t cli_parse_cmd() {
+uint8_t CLI_Parse_Cmd() {
     strncpy(_PARSED_CMD.cmd, "\0", CLI_PARAM_SIZE);
     _PARSED_CMD.nParams = 0;
     for (uint8_t i = 0; i < CLI_PARAM_CNT; i++) {
@@ -98,29 +98,29 @@ uint8_t cli_parse_cmd() {
     return 0;
 }
 
-void cli_execute() {
+void CLI_Execute() {
     //printf("DBG: execute %s (%d params)\n", _PARSED_CMD.cmd, _PARSED_CMD.nParams);
     if (strlen(_PARSED_CMD.cmd) == 0) {
         return;
     }
 
     if (strncmp(_PARSED_CMD.cmd, "help", CLI_PARAM_SIZE) == 0) {
-        for (uint8_t i = 0; i < CMD_CNT; i++) {
+        for (uint8_t i = 0; i < Get_Cmd_Cnt(); i++) {
             printf("  %s - %s\n", CMDS[i].cmd, CMDS[i].help);
         }
         return;
     }
 
-    ECliCmdReturn cmdRet = CMD_DONE;
+    CliCmdReturn_t cmdRet = CMD_DONE;
     uint8_t i = 0;
-    for (i = 0; i < CMD_CNT; i++) {
+    for (i = 0; i < Get_Cmd_Cnt(); i++) {
         if (strncmp(_PARSED_CMD.cmd, CMDS[i].cmd, CLI_PARAM_SIZE) == 0) {
             cmdRet = CMDS[i].fptr(&_PARSED_CMD);
             break;
         }
     }
 
-    if (i == CMD_CNT) {
+    if (i == Get_Cmd_Cnt()) {
         printf("UNRECOGNIZED command\n");
     } else if (cmdRet == CMD_WRONG_N) {
         printf("WRONG argument count\n");

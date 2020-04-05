@@ -9,14 +9,14 @@
 #define FCY (_XTAL_FREQ / 2)
 #include <libpic30.h>
 
-#include "src/FreeRTOSConfig.h"
+#include "FreeRTOSConfig.h"
 #include <FreeRTOS.h>
 #include <task.h>
 #include <queue.h>
 
-#include "src/agathis.h"
-#include "src/hw.h"
-#include "src/cli.h"
+#include "agathis.h"
+#include "hw.h"
+#include "cli/cli.h"
 
 void task_main(void *pvParameters) {
     while (1) {
@@ -32,10 +32,10 @@ void task_CLI(void *pvParameters) {
 
     while (1) {
         printf("%s", CLI_PROMPT);
-        cli_get_cmd();
-        parseSts = cli_parse_cmd();
+        CLI_Get_Cmd();
+        parseSts = CLI_Parse_Cmd();
         if (parseSts == 0) {
-            cli_execute();
+            CLI_Execute();
         }
         vTaskDelay(100);
     }
