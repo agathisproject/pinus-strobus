@@ -23,6 +23,7 @@
       <itemPath>src/cli.h</itemPath>
       <itemPath>src/cmd.h</itemPath>
       <itemPath>src/hw.h</itemPath>
+      <itemPath>src/agathis.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -55,6 +56,7 @@
       <itemPath>src/cmd.c</itemPath>
       <itemPath>src/constants.h</itemPath>
       <itemPath>src/hw.c</itemPath>
+      <itemPath>src/agathis.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

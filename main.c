@@ -14,8 +14,9 @@
 #include <task.h>
 #include <queue.h>
 
-#include "src/cli.h"
+#include "src/agathis.h"
 #include "src/hw.h"
+#include "src/cli.h"
 
 void task_main(void *pvParameters) {
     while (1) {
@@ -43,6 +44,7 @@ void task_CLI(void *pvParameters) {
 int main(void) {
     // initialize the device
     SYSTEM_Initialize();
+    MGMT_NODE_Initialize();
     __delay_ms(10);
     printf("boot OK\n");
     while (!UART1_IsTxDone()) {};
@@ -69,6 +71,8 @@ int main(void) {
         LED_red(1);
     }
 
+    printf("starting tasks\n");
+    while (!UART1_IsTxDone()) {};
     vTaskStartScheduler();
 
     printf("!!! FAIL !!!\n");

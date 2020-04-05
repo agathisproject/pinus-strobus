@@ -4,7 +4,10 @@
 #define HW_7424EERMK9ER9CW5
 /** @file */
 
-#include "cli.h"
+#include <stdint.h>
+
+uint8_t Get_Addr_D();
+void Set_Addr_U(uint8_t addr);
 
 void LED_red(uint8_t state);
 void LED_green(uint8_t state);

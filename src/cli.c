@@ -12,11 +12,6 @@ static char _CLI_BUFF[CLI_BUFF_SIZE + 1] = "\0";
 
 static ParsedCmd _PARSED_CMD = {"\0", 0, {"\0", "\0", "\0", "\0"}};
 
-static CliCmd CMDS[CMD_CNT] = {
-    {"ver", "", "show version", &ver},
-    {"info", "[hw|sw]", "show component info", &info},
-};
-
 void cli_get_cmd() {
     uint8_t byteIn;
     uint8_t cmdDone = 0;
@@ -61,10 +56,9 @@ void cli_get_cmd() {
 uint8_t cli_parse_cmd() {
     strncpy(_PARSED_CMD.cmd, "\0", CLI_PARAM_SIZE);
     _PARSED_CMD.nParams = 0;
-    strncpy(_PARSED_CMD.params[0], "\0", CLI_PARAM_SIZE);
-    strncpy(_PARSED_CMD.params[1], "\0", CLI_PARAM_SIZE);
-    strncpy(_PARSED_CMD.params[2], "\0", CLI_PARAM_SIZE);
-    strncpy(_PARSED_CMD.params[3], "\0", CLI_PARAM_SIZE);
+    for (uint8_t i = 0; i < CLI_PARAM_CNT; i++) {
+        strncpy(_PARSED_CMD.params[i], "\0", CLI_PARAM_SIZE);
+    }
 
     //printf("DBG: parse ...\n");
     uint8_t j = 0;
@@ -98,7 +92,7 @@ uint8_t cli_parse_cmd() {
             _PARSED_CMD.params[_PARSED_CMD.nParams - 1][j] = '\0';
         }
     }
-    if (_PARSED_CMD.nParams > 1) {
+    if (_PARSED_CMD.nParams > 0) {
         _PARSED_CMD.nParams --;
     }
     return 0;
@@ -117,16 +111,22 @@ void cli_execute() {
         return;
     }
 
-    uint8_t cmdDone = 0;
-
-    for (uint8_t i = 0; i < CMD_CNT; i++) {
+    ECliCmdReturn cmdRet = CMD_DONE;
+    uint8_t i = 0;
+    for (i = 0; i < CMD_CNT; i++) {
         if (strncmp(_PARSED_CMD.cmd, CMDS[i].cmd, CLI_PARAM_SIZE) == 0) {
-            CMDS[i].fptr(&_PARSED_CMD);
-            cmdDone = 1;
+            cmdRet = CMDS[i].fptr(&_PARSED_CMD);
             break;
         }
     }
-    if (cmdDone == 0) {
+
+    if (i == CMD_CNT) {
         printf("UNRECOGNIZED command\n");
+    } else if (cmdRet == CMD_WRONG_N) {
+        printf("WRONG argument count\n");
+        printf("  %s %s\n", CMDS[i].cmd, CMDS[i].desc);
+    } else if (cmdRet == CMD_WRONG_PARAM) {
+        printf("WRONG arguments\n");
+        printf("  %s %s\n", CMDS[i].cmd, CMDS[i].desc);
     }
 }

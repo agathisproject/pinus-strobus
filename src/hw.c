@@ -7,6 +7,15 @@
 #include "constants.h"
 #include "../mcc_generated_files/pin_manager.h"
 
+uint8_t Get_Addr_D() {
+    // TODO:
+    return 0;
+}
+
+void Set_Addr_U(uint8_t addr) {
+    // TODO:
+}
+
 void LED_red(uint8_t state) {
     if (state == 0) {
         IO_RA0_SetLow();
