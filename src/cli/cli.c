@@ -14,20 +14,16 @@ static ParsedCmd_t _PARSED_CMD = {"\0", 0, {"\0", "\0", "\0", "\0"}};
 
 void CLI_Get_Cmd() {
     uint8_t byteIn;
-    uint8_t cmdDone = 0;
     uint8_t idx = 0;
 
     strncpy(_CLI_BUFF, "\0", (CLI_BUFF_SIZE + 1));
-    while (!cmdDone) {
+    while (1) {
         if (!UART1_IsRxReady()) {
             byteIn = UART1_Read();
             //printf("%x\n", byteIn);
 
             // NL or CR end the command
             if ((byteIn == 10) || (byteIn == 13)) {
-                if (idx > 0) {
-                    cmdDone = 1;
-                }
                 break;
             }
             // BS removes last character from buffer
@@ -36,7 +32,7 @@ void CLI_Get_Cmd() {
                     idx --;
                     _CLI_BUFF[idx] = '\0';
                 }
-                break;
+                continue;
             }
             // skip non-printable characters
             if ((byteIn < 32) || (byteIn > 126)) {
@@ -44,7 +40,7 @@ void CLI_Get_Cmd() {
             }
             // if buffer full skip adding
             if (idx == CLI_BUFF_SIZE) {
-                break;
+                continue;
             }
             _CLI_BUFF[idx] = (char)byteIn;
             idx ++;
