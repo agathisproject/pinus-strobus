@@ -6,7 +6,6 @@
                    projectFiles="true">
       <logicalFolder name="cli" displayName="cli" projectFiles="true">
         <itemPath>src/cli/cli.h</itemPath>
-        <itemPath>src/cli/cmd.h</itemPath>
         <itemPath>src/cli/cli_types.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
