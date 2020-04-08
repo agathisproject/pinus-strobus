@@ -6,21 +6,34 @@
 
 #include <stdint.h>
 
+#include <FreeRTOS.h>
+#include <task.h>
+#include <semphr.h>
+#include <queue.h>
+
 #define I2C_OFFSET 0x20
 
+/**
+ * @brief state of the local MC (Management Controller)
+ */
 typedef struct {
     uint8_t TMC; /**< Tree Management Controller enabled */
     uint8_t addr_d; /**< down-trunk management address */
     uint8_t addr_u; /**< up-trunk management address */
 } MCState_t;
 
-#define NODE_MAX_CNT 16
+extern MCState_t MC;
 
+/**
+ * @brief info about the other MCs (Management Controllers)
+ */
 typedef struct {
-    uint8_t type;
+    uint8_t state;
 } MCInfo_t;
 
-extern MCState_t MC;
+#define MC_MAX_CNT 15 /** max number of MCs in the tree */
+extern MCInfo_t MMC[MC_MAX_CNT];
+extern SemaphoreHandle_t xSemaphore_MMC;
 
 void MC_Initialize();
 

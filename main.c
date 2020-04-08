@@ -9,12 +9,14 @@
 #define FCY (_XTAL_FREQ / 2)
 #include <libpic30.h>
 
-#include "agathis.h"
-#include "hw.h"
 #include "FreeRTOSConfig.h"
 #include <FreeRTOS.h>
 #include <task.h>
+#include <semphr.h>
 #include <queue.h>
+
+#include "agathis.h"
+#include "hw.h"
 #include "cli/cli.h"
 
 void task_main(void *pvParameters) {
@@ -69,6 +71,12 @@ int main(void) {
     if (xRes != pdPASS) {
         GPIO_LED_Red(1);
     }
+
+    xSemaphore_MMC = xSemaphoreCreateBinary();
+    if (xSemaphore_MMC == NULL) {
+        GPIO_LED_Red(1);
+    }
+    xSemaphoreGive(xSemaphore_MMC);
 
     printf("starting tasks\n");
     while (!UART1_IsTxDone()) {};

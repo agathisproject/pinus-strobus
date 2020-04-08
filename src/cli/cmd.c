@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "constants.h"
 #include "FreeRTOSConfig.h"
 #include <FreeRTOS.h>
 #include <task.h>
+#include <semphr.h>
+#include "constants.h"
 #include "agathis.h"
 
 void _info_SW() {
@@ -45,6 +46,20 @@ CliCmdReturn_t info(ParsedCmd_t *cmdp) {
 }
 
 CliCmdReturn_t show(ParsedCmd_t *cmdp) {
+    if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {
+        printf("ongoing scan\n");
+        return CMD_DONE;
+    }
+    for (uint8_t i = 0; i < MC_MAX_CNT; i++) {
+        printf("  MC %2d:", (i + 1));
+        if (MMC[i].state == 0) {
+            printf(" -");
+        } else {
+            printf(" X");
+        }
+        printf("\n");
+    }
+    xSemaphoreGive(xSemaphore_MMC);
     return CMD_DONE;
 }
 
@@ -56,7 +71,7 @@ unsigned int Get_Cmd_Cnt() {
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
     {"info", "[sw|hw|mc]", "show info", &info},
-    {"show", "", "show ???", &show},
+    {"show", "", "show tree MCs", &show},
 };
 
 CliCmd_t *CMDS = _CMDS_ARRAY;
