@@ -52,10 +52,12 @@ CliCmdReturn_t show(ParsedCmd_t *cmdp) {
     }
     for (uint8_t i = 0; i < MC_MAX_CNT; i++) {
         printf("  MC %2d:", (i + 1));
-        if (MMC[i].state == 0) {
+        if (RmtMC[i].state == MC_NOT_PRESENT) {
             printf(" -");
+        } else if (RmtMC[i].state = MC_INVALID) {
+            printf(" ?");
         } else {
-            printf(" X");
+            printf(" Y");
         }
         printf("\n");
     }

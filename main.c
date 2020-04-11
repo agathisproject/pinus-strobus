@@ -6,7 +6,7 @@
 #include "mcc_generated_files/clock.h"
 #include "mcc_generated_files/uart1.h"
 
-#define FCY (_XTAL_FREQ / 2)
+#define FCY (CLOCK_SystemFrequencyGet() / 2)
 #include <libpic30.h>
 
 #include "FreeRTOSConfig.h"
