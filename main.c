@@ -17,30 +17,9 @@
 
 #include "agathis.h"
 #include "hw.h"
-#include "cli/cli.h"
 
-void task_main(void *pvParameters) {
-    while (1) {
-        GPIO_LED_Green(1);
-        vTaskDelay(500);
-        GPIO_LED_Green(0);
-        vTaskDelay(500);
-    }
-}
-
-void task_CLI(void *pvParameters) {
-    uint8_t parseSts = 1;
-
-    while (1) {
-        printf("%s", CLI_PROMPT);
-        CLI_Get_Cmd();
-        parseSts = CLI_Parse_Cmd();
-        if (parseSts == 0) {
-            CLI_Execute();
-        }
-        vTaskDelay(100);
-    }
-}
+void task_mc(void *pvParameters);
+void task_CLI(void *pvParameters);
 
 int main(void) {
     // initialize the device
@@ -52,7 +31,7 @@ int main(void) {
 
     BaseType_t xRes = pdFAIL;
 
-    xRes = xTaskCreate(task_main,
+    xRes = xTaskCreate(task_mc,
                        (const char *)"main",
                        configMINIMAL_STACK_SIZE,
                        (void *)NULL,

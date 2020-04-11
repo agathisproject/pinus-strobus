@@ -66,6 +66,8 @@
       <itemPath>src/constants.h</itemPath>
       <itemPath>src/hw.c</itemPath>
       <itemPath>src/agathis.c</itemPath>
+      <itemPath>src/task_cli.c</itemPath>
+      <itemPath>src/task_mc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
