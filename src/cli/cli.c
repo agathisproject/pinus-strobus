@@ -18,7 +18,7 @@ void CLI_Get_Cmd() {
 
     strncpy(_CLI_BUFF, "\0", (CLI_BUFF_SIZE + 1));
     while (1) {
-        if (!UART1_IsRxReady()) {
+        if (UART1_IsRxReady()) {
             byteIn = UART1_Read();
             //printf("%x\n", byteIn);
 
