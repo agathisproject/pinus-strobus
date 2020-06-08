@@ -28,6 +28,8 @@
       </logicalFolder>
       <itemPath>src/hw.h</itemPath>
       <itemPath>src/agathis.h</itemPath>
+      <itemPath>src/agathis_mc.h</itemPath>
+      <itemPath>src/agathis_tmc.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -68,6 +70,8 @@
       <itemPath>src/agathis.c</itemPath>
       <itemPath>src/task_cli.c</itemPath>
       <itemPath>src/task_mc.c</itemPath>
+      <itemPath>src/agathis_mc.c</itemPath>
+      <itemPath>src/agathis_tmc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

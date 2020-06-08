@@ -9,23 +9,25 @@
 #include "constants.h"
 #include "hw.h"
 
-MCState_t MC = {0, 0, 0};
+LclMCState_t MC = {0, 0, 0, 0};
+
 MCInfo_t RmtMC[MC_MAX_CNT] = {
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
-    {MC_NOT_PRESENT},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0},
 };
+
 SemaphoreHandle_t xSemaphore_MMC = NULL;
 
 void MC_Initialize() {

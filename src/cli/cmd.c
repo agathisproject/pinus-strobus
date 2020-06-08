@@ -54,10 +54,16 @@ CliCmdReturn_t show(ParsedCmd_t *cmdp) {
         printf("  MC %2d:", (i + 1));
         if (RmtMC[i].state == MC_NOT_PRESENT) {
             printf(" -");
-        } else if (RmtMC[i].state = MC_INVALID) {
+        } else if (RmtMC[i].state == MC_INVALID) {
             printf(" ?");
         } else {
             printf(" Y");
+            if ((RmtMC[i].pow_rst & MC_CMD_ID_RST_MASK) == 1) {
+                printf(" R");
+            } else {
+                printf(" !R");
+            }
+            printf(" P%d", (RmtMC[i].pow_rst & MC_CMD_ID_PWR_MASK) > MC_CMD_ID_PWR_OFFS);
         }
         printf("\n");
     }

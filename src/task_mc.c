@@ -2,16 +2,14 @@
 
 #include <stdio.h>
 
-#include "../mcc_generated_files/i2c1.h"
-#include "../mcc_generated_files/i2c2.h"
-
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
 #include <queue.h>
 
-#include "agathis.h"
 #include "hw.h"
+#include "agathis.h"
+#include "agathis_tmc.h"
 
 void get_MC_info() {
 
@@ -22,23 +20,19 @@ void scan_tree() {
         return;
     }
 
-    I2C1_MESSAGE_STATUS sts;
-    uint8_t tx_data[2] = {0, 0};
+    uint8_t data[MC_CMD_ID_NB] = {0, 0, 0, 0};
+    MCCmdStatus_t sts = MC_CMD_FAIL;
 
     for (uint8_t i = 0; i < MC_MAX_CNT; i++) {
-        sts = I2C1_MESSAGE_PENDING;
-
-        while (!I2C1_MasterQueueIsEmpty()) {
-            vTaskDelay(1);
-        }
-        I2C1_MasterWrite(tx_data, 2, (i + I2C_OFFSET + 1), &sts);
-        while (sts == I2C1_MESSAGE_PENDING) {
-            vTaskDelay(1);
-        }
-
-        if (sts == I2C1_MESSAGE_COMPLETE) {
-            RmtMC[i].state = MC_INVALID;
-            // TODO: read MC info
+        sts = TMC_cmdID(i, (uint8_t *) &data);
+        if (sts == MC_CMD_OK) {
+            if (data[0] != 3) {
+                RmtMC[i].state = MC_INVALID;
+            } else {
+                RmtMC[i].state = MC_PRESENT;
+                RmtMC[i].pow_rst = data[1];
+                RmtMC[i].io = data[2];
+            }
         } else {
             RmtMC[i].state = MC_NOT_PRESENT;
         }

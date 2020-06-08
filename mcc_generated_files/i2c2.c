@@ -446,8 +446,8 @@ inline void __attribute__ ((always_inline)) I2C2_ReceiveProcess(void)
 
 static uint8_t i2c2_slaveWriteData = 0xAA;
 
-bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status)
-{
+//bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status)
+//{
 
     // this emulates the slave device memory where data written to slave
     // is placed and data read from slave is taken
@@ -468,7 +468,7 @@ bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status)
      Page Read Instruction:
      |Start|slave Addr + r|Ack|AddrHighByte|Ack|AddrLowByte|Ack|dataByte n|Ack|...|dataByte n+x|Nack|Stop|
     */
-    
+/*
     static uint8_t EMULATE_EEPROM_Memory[EMULATE_EEPROM_SIZE] =
             {
                 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -550,7 +550,7 @@ bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status)
 
     return true;
 }
-
+*/
 
 
 
