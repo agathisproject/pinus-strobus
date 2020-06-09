@@ -26,7 +26,7 @@ void scan_tree() {
     for (uint8_t i = 0; i < MC_MAX_CNT; i++) {
         sts = TMC_cmdID(i, (uint8_t *) &data);
         if (sts == MC_CMD_OK) {
-            if (data[0] != 3) {
+            if (data[0] != (MC_CMD_ID_NB - 1)) {
                 RmtMC[i].state = MC_INVALID;
             } else {
                 RmtMC[i].state = MC_PRESENT;

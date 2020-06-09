@@ -9,23 +9,23 @@
 #include "constants.h"
 #include "hw.h"
 
-LclMCState_t MC = {0, 0, 0, 0};
+LclMCState_t MC = {0, 0, 0, 0, 0, 0};
 
 MCInfo_t RmtMC[MC_MAX_CNT] = {
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
-    {MC_NOT_PRESENT, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
+    {MC_NOT_PRESENT, 0, 0},
 };
 
 SemaphoreHandle_t xSemaphore_MMC = NULL;
@@ -50,9 +50,22 @@ void MC_Initialize() {
 
 void MC_Show() {
     if (MC.TMC) {
-        printf(" TMC: y\n");
+        printf("  TMC: y\n");
     } else {
-        printf(" TMC: n\n");
+        printf("  TMC: n\n");
     }
-    printf("addr: %d(d) %d(u) %#03x\n", MC.addr_d, MC.addr_u, MC.addr_i2c);
+    printf(" addr: %d(d) %d(u) %#03x\n", MC.addr_d, MC.addr_u, MC.addr_i2c);
+    printf("power: %d\n", ((MC.pow_rst & MC_CMD_ID_PWR_MASK) >>
+                           MC_CMD_ID_PWR_OFFS));
+}
+
+void MC_SetPower(uint8_t val) {
+    if (val > 7) {
+        printf("INCORRECT power state: %d\n", val);
+        return;
+    }
+
+    MC.pow_rst &= ~MC_CMD_ID_PWR_MASK;
+    MC.pow_rst |= ((val << MC_CMD_ID_PWR_OFFS) & MC_CMD_ID_PWR_MASK);
+    // TODO: do HW actions
 }

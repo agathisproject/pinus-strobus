@@ -61,4 +61,6 @@ void MC_Initialize();
 
 void MC_Show();
 
+void MC_SetPower(uint8_t val);
+
 #endif /* AGATHIS_6PLS6RVRFVYEP7NX */
