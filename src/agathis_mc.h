@@ -8,4 +8,8 @@
 
 void MC_cmdID_reply(uint8_t *i2c_buff);
 
+void MC_Show();
+
+void MC_SetPower(uint8_t val);
+
 #endif /* AGATHIS_MC_6J6VQ7G8JE2XJVWE */

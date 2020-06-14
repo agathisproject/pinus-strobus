@@ -3,6 +3,7 @@
 #include "cli_types.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "FreeRTOSConfig.h"
@@ -10,7 +11,9 @@
 #include <task.h>
 #include <semphr.h>
 #include "constants.h"
-#include "agathis.h"
+//#include "agathis.h"
+#include "agathis_mc.h"
+#include "agathis_tmc.h"
 
 void _info_SW() {
     printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);
@@ -43,58 +46,67 @@ CliCmdReturn_t info(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
-void _show_tree() {
+void _ls_tree() {
     if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {
         printf("ongoing scan\n");
         return;
     }
-    for (uint8_t i = 0; i < MC_MAX_CNT; i++) {
-        printf("  MC %2d:", (i + 1));
-        if (RmtMC[i].state == MC_NOT_PRESENT) {
+
+    for (uint8_t i = 1; i < MC_MAX_CNT; i++) {
+        printf("  MC %2d:", i);
+        if (RmtMC[i - 1].state == MC_NOT_PRESENT) {
             printf(" -");
-        } else if (RmtMC[i].state == MC_INVALID) {
+        } else if (RmtMC[i - 1].state == MC_INVALID) {
             printf(" ?");
         } else {
             printf(" Y");
-            if ((RmtMC[i].pow_rst & MC_CMD_ID_RST_MASK) == 1) {
-                printf(" R");
-            } else {
-                printf(" !R");
-            }
-            printf(" P%d", (RmtMC[i].pow_rst & MC_CMD_ID_PWR_MASK) >> MC_CMD_ID_PWR_OFFS);
+            printf(" R%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
+                   MC_CMD_ID_RST_OFFS);
+            printf(" P%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
+                   MC_CMD_ID_PWR_OFFS);
         }
         printf("\n");
     }
     xSemaphoreGive(xSemaphore_MMC);
 }
 
-CliCmdReturn_t show(ParsedCmd_t *cmdp) {
-    if (cmdp->nParams != 1) {
-        return CMD_WRONG_N;
+CliCmdReturn_t ls(ParsedCmd_t *cmdp) {
+    if (cmdp->nParams == 0) {
+        _ls_tree();
+        return CMD_DONE;
     }
 
-    if (strncmp(cmdp->params[0], "mc", CLI_PARAM_SIZE) == 0) {
-        MC_Show();
-    } else if (strncmp(cmdp->params[0], "tree", CLI_PARAM_SIZE) == 0) {
-        _show_tree();
-    } else {
-        return CMD_WRONG_PARAM;
+    if (cmdp->nParams == 1) {
+        uint8_t mc_id = strtol(cmdp->params[0], NULL, 10);
+        if (mc_id == 0) {
+            MC_Show();
+        } else if (mc_id < MC_MAX_CNT) {
+            TMC_Show(mc_id);
+        } else {
+            printf("id MUST BE lower than %d\n", MC_MAX_CNT);
+        }
     }
     return CMD_DONE;
 }
 
 CliCmdReturn_t set(ParsedCmd_t *cmdp) {
-    if (cmdp->nParams != 2) {
+    if (cmdp->nParams != 3) {
         return CMD_WRONG_N;
     }
 
-    if (strncmp(cmdp->params[0], "pwr", CLI_PARAM_SIZE) == 0) {
-        uint8_t val = strtol(cmdp->params[1], NULL, 16);
-        MC_SetPower(val);
+    uint8_t mc_id = strtol(cmdp->params[0], NULL, 10);
+    if (strncmp(cmdp->params[1], "pwr", CLI_PARAM_SIZE) == 0) {
+        uint8_t val = strtol(cmdp->params[2], NULL, 16);
+        if (mc_id == 0) {
+            MC_SetPower(val);
+        } else if (mc_id < MC_MAX_CNT) {
+            // TODO: TMC_SetPower(mc_id, val);
+        } else {
+            printf("id MUST BE lower than %d\n", MC_MAX_CNT);
+        }
     } else {
         return CMD_WRONG_PARAM;
     }
-
     return CMD_DONE;
 }
 
@@ -105,9 +117,9 @@ unsigned int Get_Cmd_Cnt() {
 }
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
-    {"info", "[sw|hw]", "show info", &info},
-    {"show", "[tree|mc]", "show (T)MC info", &show},
-    {"set", "[pwr] <val>", "set (T)MC attributes", &set},
+    {"info", "[sw|hw]", "show HW/SW info", &info},
+    {"ls", "[id]", "show MC info", &ls},
+    {"set", "id [pwr] <val>", "set MC attribute", &set},
 };
 
 CliCmd_t *CMDS = _CMDS_ARRAY;

@@ -42,25 +42,23 @@ typedef struct {
     uint8_t io;
 } MCInfo_t;
 
-#define MC_MAX_CNT 15 /** max number of MCs in the tree */
-extern MCInfo_t RmtMC[MC_MAX_CNT];
+#define MC_MAX_CNT 16 /** max number of MCs in the chain, including the local one */
+extern MCInfo_t RmtMC[MC_MAX_CNT - 1];
 extern SemaphoreHandle_t xSemaphore_MMC;
 
 typedef enum {
     MC_CMD_FAIL,
     MC_CMD_OK,
+    MC_CMD_PASS,
 } MCCmdStatus_t;
 
 #define MC_CMD_ID    0x01
 #define MC_CMD_ID_NB 4
 #define MC_CMD_ID_RST_MASK 0x01
+#define MC_CMD_ID_RST_OFFS 0
 #define MC_CMD_ID_PWR_MASK 0x0E
 #define MC_CMD_ID_PWR_OFFS 1
 
 void MC_Initialize();
-
-void MC_Show();
-
-void MC_SetPower(uint8_t val);
 
 #endif /* AGATHIS_6PLS6RVRFVYEP7NX */
