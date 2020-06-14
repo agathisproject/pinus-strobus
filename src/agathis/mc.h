@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#include "agathis.h"
+#include "base.h"
 
 void MC_cmdID_reply(uint8_t *i2c_buff);
 

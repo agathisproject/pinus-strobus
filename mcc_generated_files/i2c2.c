@@ -444,7 +444,7 @@ inline void __attribute__ ((always_inline)) I2C2_ReceiveProcess(void)
          behavior.
 */
 
-static uint8_t i2c2_slaveWriteData = 0xAA;
+//static uint8_t i2c2_slaveWriteData = 0xAA;
 
 //bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status)
 //{

@@ -15,8 +15,8 @@
 #include <semphr.h>
 #include <queue.h>
 
-#include "agathis.h"
 #include "hw.h"
+#include "agathis/base.h"
 
 void task_mc(void *pvParameters);
 void task_CLI(void *pvParameters);

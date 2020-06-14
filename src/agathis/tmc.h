@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#include "agathis.h"
+#include "base.h"
 
 MCCmdStatus_t TMC_cmdID(uint8_t mc_id, uint8_t *reply);
 

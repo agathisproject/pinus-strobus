@@ -10,10 +10,10 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
+
 #include "constants.h"
-//#include "agathis.h"
-#include "agathis_mc.h"
-#include "agathis_tmc.h"
+#include "agathis/mc.h"
+#include "agathis/tmc.h"
 
 void _info_SW() {
     printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);

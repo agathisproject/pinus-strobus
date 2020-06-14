@@ -14,8 +14,8 @@
 #include <queue.h>
 
 #include "constants.h"
-#include "agathis.h"
-#include "agathis_mc.h"
+#include "agathis/base.h"
+#include "agathis/mc.h"
 
 uint8_t GPIO_Get_Addr_D() {
     // TODO:

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "agathis_mc.h"
+#include "mc.h"
 
 #include <stdio.h>
 
-#include "agathis.h"
+#include "base.h"
 
 void MC_cmdID_reply(uint8_t *i2c_buff) {
     i2c_buff[0] = 0x03;

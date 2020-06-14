@@ -7,7 +7,7 @@
 #include <semphr.h>
 #include <queue.h>
 
-#include "agathis_tmc.h"
+#include "agathis/tmc.h"
 
 void scan_tree() {
     if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {

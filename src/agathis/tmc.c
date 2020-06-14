@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "agathis_tmc.h"
+#include "tmc.h"
 
 #include <stdio.h>
 
 #include "hw.h"
-#include "agathis.h"
+#include "base.h"
 
 MCCmdStatus_t _check_id(uint8_t mc_id) {
     if (MC.TMC == 0) {
