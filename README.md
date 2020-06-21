@@ -11,7 +11,9 @@ Agathis Management Controller - Software Implementation
 
 ## with MPLAB
 
-- Open the project in MPLAB.
+- Close any open projects in your MPLAB IDE
+- Update from git (see above)
+- Open the project in MPLAB IDE
 - Click Production -> Clean and Build Project (Shift+F11)
 
 ## with CLI
