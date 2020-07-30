@@ -4,6 +4,15 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="f2" displayName="agathis" projectFiles="true">
+        <itemPath>src/agathis/base.h</itemPath>
+        <itemPath>src/agathis/mc.h</itemPath>
+        <itemPath>src/agathis/tmc.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="cli" displayName="cli" projectFiles="true">
+        <itemPath>src/cli/cli.h</itemPath>
+        <itemPath>src/cli/cli_types.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
         <itemPath>src/FreeRTOSConfig.h</itemPath>
         <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portmacro.h</itemPath>
@@ -19,9 +28,9 @@
         <itemPath>mcc_generated_files/system.h</itemPath>
         <itemPath>mcc_generated_files/uart1.h</itemPath>
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
+        <itemPath>mcc_generated_files/i2c1.h</itemPath>
+        <itemPath>mcc_generated_files/i2c2.h</itemPath>
       </logicalFolder>
-      <itemPath>src/cli.h</itemPath>
-      <itemPath>src/cmd.h</itemPath>
       <itemPath>src/hw.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -31,12 +40,22 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f2" displayName="agathis" projectFiles="true">
+        <itemPath>src/agathis/base.c</itemPath>
+        <itemPath>src/agathis/mc.c</itemPath>
+        <itemPath>src/agathis/tmc.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="cli" displayName="cli" projectFiles="true">
+        <itemPath>src/cli/cli.c</itemPath>
+        <itemPath>src/cli/cmd.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
         <itemPath>src/FreeRTOS-Kernel/portable/MemMang/heap_1.c</itemPath>
         <itemPath>src/FreeRTOS-Kernel/list.c</itemPath>
         <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/port.c</itemPath>
         <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portasm_PIC24.S</itemPath>
         <itemPath>src/FreeRTOS-Kernel/tasks.c</itemPath>
+        <itemPath>src/FreeRTOS-Kernel/queue.c</itemPath>
       </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
@@ -49,12 +68,14 @@
         <itemPath>mcc_generated_files/pin_manager.c</itemPath>
         <itemPath>mcc_generated_files/uart1.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
+        <itemPath>mcc_generated_files/i2c2.c</itemPath>
+        <itemPath>mcc_generated_files/i2c1.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
-      <itemPath>src/cli.c</itemPath>
-      <itemPath>src/cmd.c</itemPath>
       <itemPath>src/constants.h</itemPath>
       <itemPath>src/hw.c</itemPath>
+      <itemPath>src/task_cli.c</itemPath>
+      <itemPath>src/task_mc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -127,7 +148,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="extra-include-directories"
-                  value="src;./src/FreeRTOS-Kernel/include;./src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC"/>
+                  value="src;./src/FreeRTOS-Kernel/include;./src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC;./src/agathis"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>
@@ -244,7 +265,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>

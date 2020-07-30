@@ -46,6 +46,8 @@
 #include "clock.h"
 #include "system.h"
 #include "uart1.h"
+#include "i2c1.h"
+#include "i2c2.h"
 #include "tmr1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
@@ -55,7 +57,9 @@ void SYSTEM_Initialize(void)
     PIN_MANAGER_Initialize();
     CLOCK_Initialize();
     INTERRUPT_Initialize();
+    I2C1_Initialize();
     UART1_Initialize();
+    I2C2_Initialize();
     TMR1_Initialize();
 }
 
