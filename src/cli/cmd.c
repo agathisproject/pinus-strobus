@@ -59,7 +59,6 @@ void _ls_tree() {
         } else if (RmtMC[i - 1].state == MC_INVALID) {
             printf(" ?");
         } else {
-            printf(" Y");
             printf(" R%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
                    MC_CMD_ID_RST_OFFS);
             printf(" P%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
