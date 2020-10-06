@@ -83,17 +83,25 @@ bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status) {
 
 void SMBus_Rd_Block (I2CXfer_t *i2c_xfer, uint8_t cmd, uint8_t nb,
                      uint8_t *data) {
-    I2C1_MESSAGE_STATUS sts = I2C1_MESSAGE_PENDING;
-
     while (!I2C1_MasterQueueIsEmpty()) {
         vTaskDelay(1);
     }
+
+    I2C1_MESSAGE_STATUS sts = I2C1_MESSAGE_PENDING;
     I2C1_MasterWrite(&cmd, 1, i2c_xfer->i2c_addr, &sts);
+    while (sts == I2C1_MESSAGE_PENDING) {
+        vTaskDelay(1);
+    }
+    if (sts != I2C1_MESSAGE_COMPLETE) {
+        i2c_xfer->sts = I2C_XFER_FAIL;
+        return;
+    }
+
+    sts = I2C1_MESSAGE_PENDING;
     I2C1_MasterRead(data, nb, i2c_xfer->i2c_addr, &sts);
     while (sts == I2C1_MESSAGE_PENDING) {
         vTaskDelay(1);
     }
-
     if (sts == I2C1_MESSAGE_COMPLETE) {
         i2c_xfer->sts = I2C_XFER_OK;
     } else {
