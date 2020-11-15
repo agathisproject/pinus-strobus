@@ -109,6 +109,7 @@ void SMBus_Rd_Block (I2CXfer_t *i2c_xfer, uint8_t cmd, uint8_t nb,
     }
 }
 
-void SMBus_Wr_Block (I2CXfer_t *i2c_xfer, uint8_t nb, uint8_t *data) {
+void SMBus_Wr_Block (I2CXfer_t *i2c_xfer, uint8_t cmd, uint8_t nb,
+                     uint8_t *data) {
     // TODO:
 }
