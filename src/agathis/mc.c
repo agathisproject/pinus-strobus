@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "base.h"
-
+/*
 void MC_cmdID_reply(uint8_t *i2c_buff) {
     i2c_buff[0] = 0x03;
     i2c_buff[1] = MC.pow_rst;
@@ -33,3 +33,4 @@ void MC_SetPower(uint8_t val) {
     MC.pow_rst |= ((val << MC_CMD_ID_PWR_OFFS) & MC_CMD_ID_PWR_MASK);
     // TODO: do HW actions
 }
+*/

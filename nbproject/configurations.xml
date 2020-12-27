@@ -8,6 +8,7 @@
         <itemPath>src/agathis/base.h</itemPath>
         <itemPath>src/agathis/mc.h</itemPath>
         <itemPath>src/agathis/tmc.h</itemPath>
+        <itemPath>src/agathis/cmds.h</itemPath>
       </logicalFolder>
       <logicalFolder name="cli" displayName="cli" projectFiles="true">
         <itemPath>src/cli/cli.h</itemPath>
@@ -16,6 +17,10 @@
       <logicalFolder name="f1" displayName="FreeRTOS" projectFiles="true">
         <itemPath>src/FreeRTOSConfig.h</itemPath>
         <itemPath>src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC/portmacro.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="hw" projectFiles="true">
+        <itemPath>src/hw/gpio.h</itemPath>
+        <itemPath>src/hw/i2c.h</itemPath>
       </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
@@ -31,7 +36,6 @@
         <itemPath>mcc_generated_files/i2c1.h</itemPath>
         <itemPath>mcc_generated_files/i2c2.h</itemPath>
       </logicalFolder>
-      <itemPath>src/hw.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -57,6 +61,9 @@
         <itemPath>src/FreeRTOS-Kernel/tasks.c</itemPath>
         <itemPath>src/FreeRTOS-Kernel/queue.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="hw" projectFiles="true">
+        <itemPath>src/hw/i2c.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
@@ -73,7 +80,6 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>src/constants.h</itemPath>
-      <itemPath>src/hw.c</itemPath>
       <itemPath>src/task_cli.c</itemPath>
       <itemPath>src/task_mc.c</itemPath>
     </logicalFolder>
@@ -148,7 +154,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="extra-include-directories"
-                  value="src;./src/FreeRTOS-Kernel/include;./src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC;./src/agathis"/>
+                  value="./src;./mcc_generated_files;./src/FreeRTOS-Kernel/include;./src/FreeRTOS-Kernel/portable/MPLAB/PIC24_dsPIC"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>

@@ -14,6 +14,7 @@
 #include "constants.h"
 #include "agathis/mc.h"
 #include "agathis/tmc.h"
+#include "hw/i2c.h"
 
 void _info_SW() {
     printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);
@@ -46,6 +47,14 @@ CliCmdReturn_t info(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
+CliCmdReturn_t debug(ParsedCmd_t *cmdp) {
+    uint8_t buff[4];
+
+    i2c_getRXData(4, buff);
+    printf("RX: %x %x %x %x\n", buff[0], buff[1], buff[2], buff[3]);
+    return CMD_DONE;
+}
+
 void _ls_tree() {
     if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {
         printf("ongoing scan\n");
@@ -59,10 +68,10 @@ void _ls_tree() {
         } else if (RmtMC[i - 1].state == MC_INVALID) {
             printf(" ?");
         } else {
-            printf(" R%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
-                   MC_CMD_ID_RST_OFFS);
-            printf(" P%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
-                   MC_CMD_ID_PWR_OFFS);
+            //printf(" R%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
+            //       MC_CMD_ID_RST_OFFS);
+            //printf(" P%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
+            //       MC_CMD_ID_PWR_OFFS);
         }
         printf("\n");
     }
@@ -78,9 +87,9 @@ CliCmdReturn_t ls(ParsedCmd_t *cmdp) {
     if (cmdp->nParams == 1) {
         uint8_t mc_id = strtol(cmdp->params[0], NULL, 10);
         if (mc_id == 0) {
-            MC_Show();
+            //MC_Show();
         } else if (mc_id < MC_MAX_CNT) {
-            TMC_Show(mc_id);
+            //TMC_Show(mc_id);
         } else {
             printf("id MUST BE lower than %d\n", MC_MAX_CNT);
         }
@@ -97,7 +106,7 @@ CliCmdReturn_t set(ParsedCmd_t *cmdp) {
     if (strncmp(cmdp->params[1], "pwr", CLI_PARAM_SIZE) == 0) {
         uint8_t val = strtol(cmdp->params[2], NULL, 16);
         if (mc_id == 0) {
-            MC_SetPower(val);
+            //MC_SetPower(val);
         } else if (mc_id < MC_MAX_CNT) {
             // TODO: TMC_SetPower(mc_id, val);
         } else {
@@ -109,7 +118,7 @@ CliCmdReturn_t set(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
-#define CMD_CNT 3
+#define CMD_CNT 4
 
 unsigned int Get_Cmd_Cnt() {
     return CMD_CNT;
@@ -117,6 +126,7 @@ unsigned int Get_Cmd_Cnt() {
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
     {"info", "[sw|hw]", "show HW/SW info", &info},
+    {"d", "", "debug", &debug},
     {"ls", "[id]", "show MC info", &ls},
     {"set", "id [pwr] <val>", "set MC attribute", &set},
 };

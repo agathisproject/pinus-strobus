@@ -14,7 +14,7 @@ void scan_tree() {
         return;
     }
 
-    TMC_Scan();
+    //TMC_Scan();
 
     xSemaphoreGive(xSemaphore_MMC);
 }

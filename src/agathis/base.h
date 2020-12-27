@@ -5,11 +5,13 @@
 /** @file */
 
 #include <stdint.h>
-
+#if defined (__XC16__)
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
 #include <queue.h>
+#endif
+#include "cmds.h"
 
 #define I2C_OFFSET 0x20
 
@@ -17,48 +19,46 @@
  * @brief state of the local MC (Management Controller)
  */
 typedef struct {
-    uint8_t TMC;      /**< Tree Management Controller enabled */
-    uint8_t addr_d;   /**< down-trunk management address */
-    uint8_t addr_u;   /**< up-trunk management address */
-    uint8_t addr_i2c; /**< MC I2C address */
-    uint8_t pow_rst;
-    uint8_t io;
-} LclMCState_t;
+    uint8_t addr_d;        /**< down-trunk management address */
+    uint8_t addr_u;        /**< up-trunk management address */
+    uint8_t addr_i2c;      /**< MC I2C address */
+    uint8_t flags;
+    uint8_t caps;
+    uint8_t caps_en;
+    uint8_t last_err;
+    uint16_t type;
+} AG_MC_STATE_t;
 
-extern LclMCState_t MC;
+extern AG_MC_STATE_t MC;
 
 typedef enum {
     MC_NOT_PRESENT,
     MC_INVALID,
     MC_PRESENT,
-} RmtMCState_t;
+} AG_MC_SCAN_STATE;
 
 /**
  * @brief info about the other MCs (Management Controllers)
  */
 typedef struct {
-    RmtMCState_t state;
+    AG_MC_SCAN_STATE state;
     uint8_t pow_rst;
-    uint8_t io;
-} MCInfo_t;
+    uint8_t alarms;
+} AG_MC_SCAN_INFO_t;
 
 #define MC_MAX_CNT 16 /** max number of MCs in the chain, including the local one */
-extern MCInfo_t RmtMC[MC_MAX_CNT - 1];
+extern AG_MC_SCAN_INFO_t RmtMC[MC_MAX_CNT - 1];
+
+#if defined (__XC16__)
 extern SemaphoreHandle_t xSemaphore_MMC;
+#endif
 
-typedef enum {
-    MC_CMD_FAIL,
-    MC_CMD_OK,
-    MC_CMD_PASS,
-} MCCmdStatus_t;
+void ag_update_pwr(void);
 
-#define MC_CMD_ID    0x01
-#define MC_CMD_ID_NB 4
-#define MC_CMD_ID_RST_MASK 0x01
-#define MC_CMD_ID_RST_OFFS 0
-#define MC_CMD_ID_PWR_MASK 0x0E
-#define MC_CMD_ID_PWR_OFFS 1
+void ag_enable_caps(uint8_t val);
 
-void MC_Initialize();
+void ag_reset(void);
+
+void ag_init(void);
 
 #endif /* AGATHIS_6PLS6RVRFVYEP7NX */

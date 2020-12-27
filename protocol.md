@@ -22,50 +22,45 @@ where:
 
 write: **S** *addr+W* *0x01* 0x04 byte_0 byte_1 byte_2 byte_3 **P**
 
-read: **S** *addr+W* *0x01* **S** *addr+R* 0x03 byte_0 byte_1 byte_2 byte_3 **P**
+read: **S** *addr+W* *0x01* **S** *addr+R* 0x04 byte_0 byte_1 byte_2 byte_3 **P**
 
 ### Byte 0 - Protocol Version
 
 The only allowed value is 0x01.
 
-### Byte 1 - Module Control
+### Byte 1 - Flags
 
 | bit | power-on | description           |
 |----:|---------:|-----------------------|
 |  7  |   - (RO) | MC is TMC             |
 |  6  |   - (RO) | MC has EEPROM         |
-|  5  |   0 (RO) | reserved              |
-|  4  |   0 (RO) | operation in progress |
-| 3-1 |   0 (RO) | average power level   |
-|  0  |   0 (RW) | reset                 |
+| 5-1 |   0 (RO) | TBD                   |
+|  0  |   0 (RO) | operation in progress |
 
 Bit 7 - Indicates is the module is a TMC or regular MC. The TMC ends the current management segment.
 
 Bit 6 - The module can have EEPROM for saving the current configuration, but it's not mandatory (for cheaper uCs)
 
-Bit 4 - Indicates if the latest operation requested by the TMC is in progress
+Bit 0 - Indicates if the latest operation requested by the TMC is in progress
 
-Average power level can have the following values:
+### Byte 2 - Error Code
 
-  * 0x0 (less than ??? W)
-  * 0x1 (between ??? and ??? W)
+| bit | power-on | description |
+|----:|---------:|-------------|
+| 7-0 |   - (RO) | error code  |
 
-Bit 0 - Write 1 to reset the module. If the I2C interface is active during the reset this bit will stay 1 for the duration of the reset.
+0 means NO ERROR. The values at power-on are not defined since the module can have errors on boot.
 
-### Byte 2 - Alarms
+If multiple error codes are present only the most important one will be shown. After clearing the cause of the current error code, the next one will be shown.
 
-| bit | power-on | description        |
-|----:|---------:|--------------------|
-| 7-4 |   - (RO) | number of warnings |
-| 3-0 |   - (RO) | number of errors   |
-
-The values at power-on are not defined since the module can have warnings/alarms on boot.
-
-### Byte 3 - TBD
+### Byte 3 - Commands
 
 | bit | power-on | description        |
 |----:|---------:|--------------------|
-| 7-0 |   0 (RO) |                    |
+| 7-1 |   - (RW) | TBD                |
+|  0  |   0 (RW) | module reset       |
+
+Bit 0 - Write 1 to reset the module. If the I2C interface is active during the reset additional writes will not cause a reset until the current one is done.
 
 ## Type (0x02)
 

@@ -4,9 +4,8 @@
 
 #include <stdio.h>
 
-#include "hw.h"
 #include "base.h"
-
+/*
 MCCmdStatus_t _check_id(uint8_t mc_id) {
     if (MC.TMC == 0) {
         printf("NOT on a TMC\n");
@@ -71,3 +70,4 @@ MCCmdStatus_t TMC_Scan() {
     }
     return MC_CMD_OK;
 }
+*/
