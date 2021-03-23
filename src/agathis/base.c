@@ -40,7 +40,7 @@ SemaphoreHandle_t xSemaphore_MMC = NULL;
 
 #if defined(__AVR__)
 uint8_t p_gpio_addr_d(void) {
-    uint8_t res = (1 + (gpio_get(3) << 1) + gpio_get(2));
+    uint8_t res = ((gpio_get(6) << 2) + (gpio_get(5) << 1) + gpio_get(4));
     return res;
 }
 #elif defined(__XC16__)
@@ -52,7 +52,9 @@ uint8_t p_gpio_addr_d(void) {
 
 #if defined(__AVR__)
 void p_gpio_addr_u(uint8_t addr) {
-    // TODO:
+    gpio_set(7, (addr & 0x01));
+    gpio_set(8, ((addr >> 1) & 0x01));
+    gpio_set(9, ((addr >> 2) & 0x01));
 }
 #elif defined(__XC16__)
 void p_gpio_addr_u(uint8_t addr) {
@@ -90,8 +92,8 @@ void ag_init() {
     ag_enable_caps(0x00);
     MC.last_err = 0;
     ag_update_pwr();
-    printf("[MC] addr: 0x%02X / 0x%02X (0x%02X)\n", MC.addr_d, MC.addr_u,
-           MC.addr_i2c);
+    printf("%s addr: 0x%02X / 0x%02X (0x%02X)\n", PREFIX_MC,
+           MC.addr_d, MC.addr_u, MC.addr_i2c);
 }
 
 #if defined(__AVR__)

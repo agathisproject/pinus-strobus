@@ -30,4 +30,7 @@ typedef enum {
 #define AG_CAP_1PPS_FLAG   0x02
 #define AG_CAP_CLK100_FLAG 0x01
 
+#define AG_CMD_MFR         0xFE
+#define AG_CMD_MFR_NB      4
+
 #endif /* CMDS_98RXG9U8BUUHY401 */

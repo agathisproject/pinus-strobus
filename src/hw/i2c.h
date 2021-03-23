@@ -104,7 +104,7 @@ void i2c_setTXCallback(void (*function)(I2CXfer_t *));
 void i2c_setRXCallback(void (*function)(I2CXfer_t *));
 
 /**
- * @brief set TX buffer data
+ * @brief copy *nb* bytes from *data* to TX buffer
  *
  * @param nb
  * @param data
@@ -113,12 +113,28 @@ void i2c_setRXCallback(void (*function)(I2CXfer_t *));
 int i2c_setTXData(uint16_t nb, const uint8_t *data);
 
 /**
- * @brief get RX buffer data
+ * @brief set the *nb* byte of TX buffer to *data*
+ *
+ * @param nb
+ * @param data
+ */
+void i2c_setTXByte(uint16_t nb, uint8_t data);
+
+/**
+ * @brief copy *nb* bytes from RX buffer to *data*
  *
  * @param nb
  * @param data
  * @return 0 if no error
  */
 int i2c_getRXData(uint16_t nb, uint8_t *data);
+
+/**
+ * @brief get the *nb* byte of RX buffer
+ *
+ * @param nb
+ * @return uint8_t
+ */
+uint8_t i2c_getRXByte(uint16_t nb);
 
 #endif /* I2C_J32E49JL5HYBV8GS */

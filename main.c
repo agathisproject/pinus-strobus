@@ -46,16 +46,17 @@ void GPIO_LED_Blue(uint8_t state) {
 void task_mc(void *pvParameters);
 void task_CLI(void *pvParameters);
 
+uint32_t scratch = 0;
+
 void tx_i2c(I2CXfer_t *i2c_xfer) {
 
 }
 
 void rx_i2c(I2CXfer_t *i2c_xfer) {
-    uint8_t cmd = 0;
     uint8_t reply[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    uint8_t cmd = i2c_getRXByte(0);
 
     if (i2c_xfer->nb == 1) {
-        i2c_getRXData(1, &cmd);
         switch (cmd) {
             case AG_CMD_SUMMARY:
                 reply[0] = AG_CMD_SUMMARY_NB;
@@ -77,8 +78,33 @@ void rx_i2c(I2CXfer_t *i2c_xfer) {
                 reply[2] = MC.caps_en;
                 i2c_setTXData((AG_CMD_TYPE_NB + 1), reply);
                 break;
+            case AG_CMD_MFR:
+                i2c_setTXByte(0, AG_CMD_MFR_NB);
+                i2c_setTXByte(1, (uint8_t) (scratch & 0xFF));
+                i2c_setTXByte(2, (uint8_t) ((scratch >> 8) & 0xFF));
+                i2c_setTXByte(3, (uint8_t) ((scratch >> 16) & 0xFF));
+                i2c_setTXByte(4, (uint8_t) ((scratch >> 24) & 0xFF));
             default:
                 break;
+        }
+    } else {
+        if (i2c_xfer->nb == (i2c_getRXByte(1) + 2)) {
+            switch (cmd) {
+                case AG_CMD_CAP:
+                    break;
+                case AG_CMD_MFR:
+                    scratch <<= 8;
+                    scratch |= i2c_getRXByte(5);
+                    scratch <<= 8;
+                    scratch |= i2c_getRXByte(4);
+                    scratch <<= 8;
+                    scratch |= i2c_getRXByte(3);
+                    scratch <<= 8;
+                    scratch |= i2c_getRXByte(2);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -235,6 +235,12 @@ int i2c_setTXData(uint16_t nb, const uint8_t *data) {
     return 0;
 }
 
+void i2c_setTXByte(uint16_t nb, uint8_t data) {
+    if (nb < I2C_BUFFER_SIZE) {
+        i2c_tx_buff[nb] = data;
+    }
+}
+
 int i2c_getRXData(uint16_t nb, uint8_t *data) {
     if (nb > I2C_BUFFER_SIZE) {
         return -1;
@@ -244,6 +250,14 @@ int i2c_getRXData(uint16_t nb, uint8_t *data) {
         data[i] = i2c_rx_buff[i];
     }
     return 0;
+}
+
+uint8_t i2c_getRXByte(uint16_t nb) {
+    if (nb > I2C_BUFFER_SIZE) {
+        return -1;
+    } else {
+        return i2c_rx_buff[nb];
+    }
 }
 //------------------------------------------------------------------------------
 //#if defined(__AVR__)
@@ -475,9 +489,14 @@ bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status) {
             //printf("t\n");
             s_I2CXfer_cur.type = I2C_RD;
             s_I2CXfer_cur.status = I2C_XFER_SL_TX;
-            s_I2CXfer_cur.nb = i2c_rx_buff_idx;
-            i2c_onTX(&s_I2CXfer_cur);
-            I2C2_ReadPointerSet(&i2c_tx_buff[i2c_tx_buff_idx++]);
+            if (i2c_tx_buff_idx < I2C_BUFFER_SIZE) {
+                I2C2_ReadPointerSet(&i2c_tx_buff[i2c_tx_buff_idx++]);
+                s_I2CXfer_cur.nb = i2c_tx_buff_idx;
+                i2c_onTX(&s_I2CXfer_cur);
+            } else {
+                i2c2_rx = 0;
+                I2C2_ReadPointerSet(&i2c2_rx);
+            }
             break;
         case I2C2_SLAVE_RECEIVE_REQUEST_DETECTED:
             //printf("r\n");
@@ -487,11 +506,13 @@ bool I2C2_StatusCallback(I2C2_SLAVE_DRIVER_STATUS status) {
             break;
         case I2C2_SLAVE_RECEIVED_DATA_DETECTED:
             //printf("d\n");
-            i2c_rx_buff[i2c_rx_buff_idx++] = i2c2_rx;
             s_I2CXfer_cur.type = I2C_WR;
             s_I2CXfer_cur.status = I2C_XFER_SL_RX;
-            s_I2CXfer_cur.nb = i2c_rx_buff_idx;
-            i2c_onRX(&s_I2CXfer_cur);
+            if (i2c_rx_buff_idx < I2C_BUFFER_SIZE) {
+                i2c_rx_buff[i2c_rx_buff_idx++] = i2c2_rx;
+                s_I2CXfer_cur.nb = i2c_rx_buff_idx;
+                i2c_onRX(&s_I2CXfer_cur);
+            }
             break;
         case I2C2_SLAVE_10BIT_RECEIVE_REQUEST_DETECTED:
             break;

@@ -13,6 +13,7 @@
 #endif
 #include "cmds.h"
 
+#define PREFIX_MC "[ MC]"
 #define I2C_OFFSET 0x20
 
 /**
