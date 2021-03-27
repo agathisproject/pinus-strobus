@@ -8,7 +8,7 @@
 
 //void MC_cmdID_reply(uint8_t *i2c_buff);
 
-//void MC_Show();
+//void MC_Show(void);
 
 //void MC_SetPower(uint8_t val);
 

@@ -13,7 +13,7 @@ static char _CLI_BUFF[CLI_BUFF_SIZE + 1] = "\0";
 
 static ParsedCmd_t _PARSED_CMD = {"\0", 0, {"\0", "\0", "\0", "\0"}};
 
-void CLI_Get_Cmd() {
+void CLI_Get_Cmd(void) {
     uint8_t byteIn;
     uint8_t idx = 0;
 
@@ -50,7 +50,7 @@ void CLI_Get_Cmd() {
     }
 }
 
-uint8_t CLI_Parse_Cmd() {
+uint8_t CLI_Parse_Cmd(void) {
     strncpy(_PARSED_CMD.cmd, "\0", CLI_PARAM_SIZE);
     _PARSED_CMD.nParams = 0;
     for (uint8_t i = 0; i < CLI_PARAM_CNT; i++) {
@@ -95,7 +95,7 @@ uint8_t CLI_Parse_Cmd() {
     return 0;
 }
 
-void CLI_Execute() {
+void CLI_Execute(void) {
     //printf("DBG: execute %s (%d params)\n", _PARSED_CMD.cmd, _PARSED_CMD.nParams);
     if (strlen(_PARSED_CMD.cmd) == 0) {
         return;

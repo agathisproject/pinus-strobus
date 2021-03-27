@@ -73,6 +73,6 @@ uint8_t isRcv(void) {
     return cmd_rcv;
 }
 
-void clrRcv() {
+void clrRcv(void) {
     cmd_rcv = 0;
 }

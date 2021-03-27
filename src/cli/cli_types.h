@@ -34,6 +34,6 @@ typedef struct {
 } CliCmd_t;
 
 extern CliCmd_t *CMDS;
-unsigned int Get_Cmd_Cnt();
+unsigned int Get_Cmd_Cnt(void);
 
 #endif /* CLI_TYPES_BEES5G972K9T2FRP */

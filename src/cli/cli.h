@@ -9,8 +9,8 @@
 
 #define CLI_PROMPT "> "
 
-void CLI_Get_Cmd();
-uint8_t CLI_Parse_Cmd();
-void CLI_Execute();
+void CLI_Get_Cmd(void);
+uint8_t CLI_Parse_Cmd(void);
+void CLI_Execute(void);
 
 #endif /* CLI_YP8GJVG3TCW7BWQW */

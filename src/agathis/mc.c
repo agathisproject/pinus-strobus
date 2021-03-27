@@ -14,7 +14,7 @@ void MC_cmdID_reply(uint8_t *i2c_buff) {
     i2c_buff[3] = 0x00;
 }
 
-void MC_Show() {
+void MC_Show(void) {
     printf(" %4s: %d(d) %d(u) %#03x\n", "addr",
            MC.addr_d, MC.addr_u, MC.addr_i2c);
     printf(" %4s: %d\n", "TMC", MC.TMC);

@@ -13,21 +13,20 @@
 #include <semphr.h>
 
 #include "constants.h"
-#include "agathis/mc.h"
-#include "agathis/tmc.h"
 #include "hw/i2c.h"
+#include "agathis/base.h"
 
 extern TaskHandle_t xHandle0;
 extern TaskHandle_t xHandle1;
 static char strState[5] = "rRBSD";
 
-void _info_SW() {
+void _info_SW(void) {
     printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);
     printf("   FW: %d\n", APP_VERSION);
     //printf("build: %s\n", APP_BUILD);
 }
 
-void _info_HW() {
+void _info_HW(void) {
     unsigned int devid, devrev;
 
     TBLPAG = 0xFF;
@@ -80,7 +79,7 @@ CliCmdReturn_t debug(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
-void _ls_tree() {
+void _ls_tree(void) {
     if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {
         printf("ongoing scan\n");
         return;
@@ -145,16 +144,15 @@ CliCmdReturn_t set(ParsedCmd_t *cmdp) {
 
 #define CMD_CNT 4
 
-unsigned int Get_Cmd_Cnt() {
+unsigned int Get_Cmd_Cnt(void) {
     return CMD_CNT;
 }
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
     {"info", "[sw|hw]", "show HW/SW info", &info},
     {"ps", "", "show tasks", &ps},
-    {"d", "", "debug", &debug},
     {"ls", "[id]", "show MC info", &ls},
-
+    {"d", "", "debug", &debug},
 };
 
 CliCmd_t *CMDS = _CMDS_ARRAY;

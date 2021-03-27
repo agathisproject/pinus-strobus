@@ -51,7 +51,7 @@ MCCmdStatus_t TMC_Show(uint8_t mc_id) {
     return MC_CMD_OK;
 }
 
-MCCmdStatus_t TMC_Scan() {
+MCCmdStatus_t TMC_Scan(void) {
     uint8_t data[MC_CMD_ID_NB] = {0, 0, 0, 0};
     MCCmdStatus_t sts = MC_CMD_FAIL;
 

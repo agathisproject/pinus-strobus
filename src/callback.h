@@ -13,8 +13,6 @@ void i2c2_tx(I2CXfer_t *i2c_xfer);
 void i2c2_rx(I2CXfer_t *i2c_xfer);
 
 uint8_t isRcv(void);
-void clrRcv();
-
-//void process_cmd();
+void clrRcv(void);
 
 #endif	/* MISC_J39EZD4F5QGUGQMU */

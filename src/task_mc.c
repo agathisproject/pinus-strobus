@@ -8,10 +8,10 @@
 #include <semphr.h>
 #include <queue.h>
 
-#include "hw/callback.h"
-#include "agathis/tmc.h"
+#include "callback.h"
+#include "agathis/base.h"
 
-void scan_tree() {
+void scan_tree(void) {
     if (xSemaphoreTake(xSemaphore_MMC, 10) != pdTRUE) {
         return;
     }

@@ -1,7 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-
 #ifndef I2C_J32E49JL5HYBV8GS
 #define I2C_J32E49JL5HYBV8GS
 /** @file */
