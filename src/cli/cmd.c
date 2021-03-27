@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #include "cli_types.h"
 
 #include <stdio.h>
@@ -15,6 +16,10 @@
 #include "agathis/mc.h"
 #include "agathis/tmc.h"
 #include "hw/i2c.h"
+
+extern TaskHandle_t xHandle0;
+extern TaskHandle_t xHandle1;
+static char strState[5] = "rRBSD";
 
 void _info_SW() {
     printf("   OS: %s\n", tskKERNEL_VERSION_NUMBER);
@@ -47,11 +52,31 @@ CliCmdReturn_t info(ParsedCmd_t *cmdp) {
     return CMD_DONE;
 }
 
-CliCmdReturn_t debug(ParsedCmd_t *cmdp) {
-    uint8_t buff[4];
+CliCmdReturn_t ps(ParsedCmd_t *cmdp) {
+    if (cmdp->nParams != 0) {
+        return CMD_WRONG_N;
+    }
 
-    i2c_getRXData(4, buff);
-    printf("RX: %x %x %x %x\n", buff[0], buff[1], buff[2], buff[3]);
+    TaskStatus_t xTaskSts;
+
+    vTaskGetInfo(xHandle0, &xTaskSts, pdTRUE, eInvalid);
+    printf("%8s, st: %c, pr: %d, stk: %d\n", xTaskSts.pcTaskName,
+           strState[xTaskSts.eCurrentState], xTaskSts.uxCurrentPriority,
+           xTaskSts.usStackHighWaterMark);
+    vTaskGetInfo(xHandle1, &xTaskSts, pdTRUE, eInvalid);
+    printf("%8s, st: %c, pr: %d, stk: %d\n", xTaskSts.pcTaskName,
+           strState[xTaskSts.eCurrentState], xTaskSts.uxCurrentPriority,
+           xTaskSts.usStackHighWaterMark);
+
+    return CMD_DONE;
+}
+
+CliCmdReturn_t debug(ParsedCmd_t *cmdp) {
+    uint8_t buff[8];
+
+    i2c_getRXData(8, buff);
+    printf("RX: %x %x %x %x %x %x\n", buff[0], buff[1],
+           buff[2], buff[3], buff[4], buff[5]);
     return CMD_DONE;
 }
 
@@ -126,9 +151,10 @@ unsigned int Get_Cmd_Cnt() {
 
 static CliCmd_t _CMDS_ARRAY[CMD_CNT] = {
     {"info", "[sw|hw]", "show HW/SW info", &info},
+    {"ps", "", "show tasks", &ps},
     {"d", "", "debug", &debug},
     {"ls", "[id]", "show MC info", &ls},
-    {"set", "id [pwr] <val>", "set MC attribute", &set},
+
 };
 
 CliCmd_t *CMDS = _CMDS_ARRAY;

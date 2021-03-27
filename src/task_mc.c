@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #include <stdio.h>
 
 #include <FreeRTOS.h>
@@ -7,6 +8,7 @@
 #include <semphr.h>
 #include <queue.h>
 
+#include "hw/callback.h"
 #include "agathis/tmc.h"
 
 void scan_tree() {
@@ -21,7 +23,7 @@ void scan_tree() {
 
 void task_mc(void *pvParameters) {
     while (1) {
-        scan_tree();
-        vTaskDelay(500);
+        //scan_tree();
+        vTaskDelay(1);
     }
 }

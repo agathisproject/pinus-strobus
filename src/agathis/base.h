@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #ifndef AGATHIS_6PLS6RVRFVYEP7NX
 #define AGATHIS_6PLS6RVRFVYEP7NX
 /** @file */

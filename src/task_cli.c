@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #include <stdio.h>
 
 #include <FreeRTOS.h>
@@ -19,6 +20,6 @@ void task_CLI(void *pvParameters) {
         if (parseSts == 0) {
             CLI_Execute();
         }
-        vTaskDelay(100);
+        //vTaskDelay(1);
     }
 }

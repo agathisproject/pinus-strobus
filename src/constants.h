@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #ifndef CONSTANTS_UFA49BWU856ZPMTB
 #define	CONSTANTS_UFA49BWU856ZPMTB
 /** @file */

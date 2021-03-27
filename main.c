@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
 #include <stdio.h>
 
 #include "system.h"
@@ -17,6 +18,7 @@
 #include <queue.h>
 
 #include "hw/i2c.h"
+#include "hw/callback.h"
 #include "agathis/base.h"
 
 void GPIO_LED_Red(uint8_t state) {
@@ -45,75 +47,14 @@ void GPIO_LED_Blue(uint8_t state) {
 
 void task_mc(void *pvParameters);
 void task_CLI(void *pvParameters);
-
-uint32_t scratch = 0;
-
-void tx_i2c(I2CXfer_t *i2c_xfer) {
-
-}
-
-void rx_i2c(I2CXfer_t *i2c_xfer) {
-    uint8_t reply[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-    uint8_t cmd = i2c_getRXByte(0);
-
-    if (i2c_xfer->nb == 1) {
-        switch (cmd) {
-            case AG_CMD_SUMMARY:
-                reply[0] = AG_CMD_SUMMARY_NB;
-                reply[1] = AG_PROTO_VER;
-                reply[2] = MC.flags;
-                reply[3] = MC.last_err;
-                reply[4] = 0x00;
-                i2c_setTXData((AG_CMD_SUMMARY_NB + 1), reply);
-                break;
-            case AG_CMD_TYPE:
-                reply[0] = AG_CMD_TYPE_NB;
-                reply[1] = (uint8_t) MC.type;
-                reply[2] = (uint8_t) (MC.type >> 8);
-                i2c_setTXData((AG_CMD_TYPE_NB + 1), reply);
-                break;
-            case AG_CMD_CAP:
-                reply[0] = AG_CMD_CAP_NB;
-                reply[1] = MC.caps;
-                reply[2] = MC.caps_en;
-                i2c_setTXData((AG_CMD_TYPE_NB + 1), reply);
-                break;
-            case AG_CMD_MFR:
-                i2c_setTXByte(0, AG_CMD_MFR_NB);
-                i2c_setTXByte(1, (uint8_t) (scratch & 0xFF));
-                i2c_setTXByte(2, (uint8_t) ((scratch >> 8) & 0xFF));
-                i2c_setTXByte(3, (uint8_t) ((scratch >> 16) & 0xFF));
-                i2c_setTXByte(4, (uint8_t) ((scratch >> 24) & 0xFF));
-            default:
-                break;
-        }
-    } else {
-        if (i2c_xfer->nb == (i2c_getRXByte(1) + 2)) {
-            switch (cmd) {
-                case AG_CMD_CAP:
-                    break;
-                case AG_CMD_MFR:
-                    scratch <<= 8;
-                    scratch |= i2c_getRXByte(5);
-                    scratch <<= 8;
-                    scratch |= i2c_getRXByte(4);
-                    scratch <<= 8;
-                    scratch |= i2c_getRXByte(3);
-                    scratch <<= 8;
-                    scratch |= i2c_getRXByte(2);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-}
+TaskHandle_t xHandle0 = NULL;
+TaskHandle_t xHandle1 = NULL;
 
 void i2c_init() {
     i2c_initMaster(i2c_getCtrl(0), 100);
     i2c_initSlave(i2c_getCtrl(1), 100, MC.addr_i2c);
-    i2c_setTXCallback(&tx_i2c);
-    i2c_setRXCallback(&rx_i2c);
+    i2c_setTXCallback(&i2c2_tx);
+    i2c_setRXCallback(&i2c2_rx);
     i2c_showCtrl(i2c_getCtrl(0));
     i2c_showCtrl(i2c_getCtrl(1));
 }
@@ -133,8 +74,8 @@ int main(void) {
                        (const char *)"main",
                        configMINIMAL_STACK_SIZE,
                        (void *)NULL,
-                       tskIDLE_PRIORITY,
-                       NULL);
+                       (tskIDLE_PRIORITY + 1),
+                       &xHandle0);
     if (xRes != pdPASS) {
         GPIO_LED_Red(1);
     }
@@ -144,7 +85,7 @@ int main(void) {
                        configMINIMAL_STACK_SIZE,
                        (void *)NULL,
                        tskIDLE_PRIORITY,
-                       NULL);
+                       &xHandle1);
     if (xRes != pdPASS) {
         GPIO_LED_Red(1);
     }
