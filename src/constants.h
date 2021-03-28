@@ -8,4 +8,4 @@
 #define APP_VERSION 1
 #define APP_BUILD "???"
 
-#endif	/* CONSTANTS_UFA49BWU856ZPMTB */
+#endif /* CONSTANTS_UFA49BWU856ZPMTB */

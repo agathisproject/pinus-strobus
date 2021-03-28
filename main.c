@@ -30,6 +30,7 @@ void init() {
     __delay_ms(10);
     printf("boot OK\n");
     while (!UART1_IsTxDone()) {};
+    cpu_init();
 
     gpio_init();
     ag_init();

@@ -16,60 +16,88 @@ void gpio_cfg(PIN_ID_t pinId, PIN_TYPE_t type) {
 #elif defined(__AVR__)
 void gpio_cfg(PIN_ID_t pinId, PIN_TYPE_t type) {
     switch (pinId) {
-        case 2:
+        case PIN_2:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD2);
             } else {
                 DDRD &= ~_BV(DDD2);
             }
             break;
-        case 3:
+        case PIN_3:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD3);
             } else {
                 DDRD &= ~_BV(DDD3);
             }
             break;
-        case 4:
+        case PIN_4:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD4);
             } else {
                 DDRD &= ~_BV(DDD4);
             }
             break;
-        case 5:
+        case PIN_5:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD5);
             } else {
                 DDRD &= ~_BV(DDD5);
             }
             break;
-        case 6:
+        case PIN_6:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD6);
             } else {
                 DDRD &= ~_BV(DDD6);
             }
             break;
-        case 7:
+        case PIN_7:
             if (type == PIN_TYPE_OUT) {
                 DDRD |= _BV(DDD7);
             } else {
                 DDRD &= ~_BV(DDD7);
             }
             break;
-        case 8:
+        case PIN_8:
             if (type == PIN_TYPE_OUT) {
                 DDRB |= _BV(DDB0);
             } else {
                 DDRB &= ~_BV(DDB0);
             }
             break;
-        case 9:
+        case PIN_9:
             if (type == PIN_TYPE_OUT) {
                 DDRB |= _BV(DDB1);
             } else {
                 DDRB &= ~_BV(DDB1);
+            }
+            break;
+        case PIN_10:
+            if (type == PIN_TYPE_OUT) {
+                DDRB |= _BV(DDB2);
+            } else {
+                DDRB &= ~_BV(DDB2);
+            }
+            break;
+        case PIN_11:
+            if (type == PIN_TYPE_OUT) {
+                DDRB |= _BV(DDB3);
+            } else {
+                DDRB &= ~_BV(DDB3);
+            }
+            break;
+        case PIN_12:
+            if (type == PIN_TYPE_OUT) {
+                DDRB |= _BV(DDB4);
+            } else {
+                DDRB &= ~_BV(DDB4);
+            }
+            break;
+        case PIN_13:
+            if (type == PIN_TYPE_OUT) {
+                DDRB |= _BV(DDB5);
+            } else {
+                DDRB &= ~_BV(DDB5);
             }
             break;
         default:
@@ -89,60 +117,88 @@ void gpio_set(PIN_ID_t pinId, uint8_t val) {
 #elif defined(__AVR__)
 void gpio_set(PIN_ID_t pinId, uint8_t val) {
     switch (pinId) {
-        case 2:
+        case PIN_2:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD2);
             } else {
                 PORTD |= _BV(PORTD2);
             }
             break;
-        case 3:
+        case PIN_3:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD3);
             } else {
                 PORTD |= _BV(PORTD3);
             }
             break;
-        case 4:
+        case PIN_4:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD4);
             } else {
                 PORTD |= _BV(PORTD4);
             }
             break;
-        case 5:
+        case PIN_5:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD5);
             } else {
                 PORTD |= _BV(PORTD5);
             }
             break;
-        case 6:
+        case PIN_6:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD6);
             } else {
                 PORTD |= _BV(PORTD6);
             }
             break;
-        case 7:
+        case PIN_7:
             if (val == 0) {
                 PORTD &= ~_BV(PORTD7);
             } else {
                 PORTD |= _BV(PORTD7);
             }
             break;
-        case 8:
+        case PIN_8:
             if (val == 0) {
                 PORTB &= ~_BV(PORTB0);
             } else {
                 PORTB |= _BV(PORTB0);
             }
             break;
-        case 9:
+        case PIN_9:
             if (val == 0) {
                 PORTB &= ~_BV(PORTB1);
             } else {
                 PORTB |= _BV(PORTB1);
+            }
+            break;
+        case PIN_10:
+            if (val == 0) {
+                PORTB &= ~_BV(PORTB2);
+            } else {
+                PORTB |= _BV(PORTB2);
+            }
+            break;
+        case PIN_11:
+            if (val == 0) {
+                PORTB &= ~_BV(PORTB3);
+            } else {
+                PORTB |= _BV(PORTB3);
+            }
+            break;
+        case PIN_12:
+            if (val == 0) {
+                PORTB &= ~_BV(PORTB4);
+            } else {
+                PORTB |= _BV(PORTB4);
+            }
+            break;
+        case PIN_13:
+            if (val == 0) {
+                PORTB &= ~_BV(PORTB5);
+            } else {
+                PORTB |= _BV(PORTB5);
             }
             break;
         default:
@@ -186,22 +242,30 @@ uint8_t gpio_get(PIN_ID_t pinId) {
 #elif defined(__AVR__)
 uint8_t gpio_get(PIN_ID_t pinId) {
     switch (pinId) {
-        case 2:
+        case PIN_2:
             return (PIND & _BV(PIND2)) >> PIND2;
-        case 3:
+        case PIN_3:
             return (PIND & _BV(PIND3)) >> PIND3;
-        case 4:
+        case PIN_4:
             return (PIND & _BV(PIND4)) >> PIND4;
-        case 5:
+        case PIN_5:
             return (PIND & _BV(PIND5)) >> PIND5;
-        case 6:
+        case PIN_6:
             return (PIND & _BV(PIND6)) >> PIND6;
-        case 7:
+        case PIN_7:
             return (PIND & _BV(PIND7)) >> PIND7;
-        case 8:
+        case PIN_8:
             return (PINB & _BV(PINB0)) >> PINB0;
-        case 9:
+        case PIN_9:
             return (PINB & _BV(PINB1)) >> PINB1;
+        case PIN_10:
+            return (PINB & _BV(PINB2)) >> PINB2;
+        case PIN_11:
+            return (PINB & _BV(PINB3)) >> PINB3;
+        case PIN_12:
+            return (PINB & _BV(PINB4)) >> PINB4;
+        case PIN_13:
+            return (PINB & _BV(PINB5)) >> PINB5;
         default:
             return 0;
     }

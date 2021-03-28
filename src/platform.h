@@ -20,7 +20,8 @@
 #define PIN_U_ADDR1 PIN_NONE
 #define PIN_U_ADDR2 PIN_NONE
 
+void cpu_init(void);
 void gpio_init(void);
 void i2c_init(void);
 
-#endif	/* PLATFORM_2XL5RPCV8P7A7PGJ */
+#endif /* PLATFORM_2XL5RPCV8P7A7PGJ */

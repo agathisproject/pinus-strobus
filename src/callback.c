@@ -11,10 +11,10 @@ static uint32_t scratch = 0;
 
 extern TaskHandle_t xHandle0;
 
-void i2c2_tx(I2CXfer_t *i2c_xfer) {
+void tx_i2c2(I2CXfer_t *i2c_xfer) {
 }
 
-void i2c2_rx(I2CXfer_t *i2c_xfer) {
+void rx_i2c2(I2CXfer_t *i2c_xfer) {
     uint8_t cmd = i2c_getRXByte(0);
 
     if (i2c_xfer->nb == 1) {
@@ -42,6 +42,7 @@ void i2c2_rx(I2CXfer_t *i2c_xfer) {
                 i2c_setTXByte(2, (uint8_t) ((scratch >> 8) & 0xFF));
                 i2c_setTXByte(3, (uint8_t) ((scratch >> 16) & 0xFF));
                 i2c_setTXByte(4, (uint8_t) ((scratch >> 24) & 0xFF));
+                break;
             default:
                 break;
         }
@@ -50,7 +51,13 @@ void i2c2_rx(I2CXfer_t *i2c_xfer) {
             i2c_getRXData(i2c_xfer->nb, cmd_buff);
             cmd_rcv = 1;
             switch (cmd_buff[0]) {
+                case AG_CMD_SUMMARY:
+                    if (cmd_buff[3] & AG_RESET_FLAG) {
+                        ag_reset();
+                    }
+                    break;
                 case AG_CMD_CAP:
+                    ag_enable_caps(cmd_buff[4]);
                     break;
                 case AG_CMD_MFR:
                     scratch <<= 8;
