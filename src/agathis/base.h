@@ -1,12 +1,11 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef AGATHIS_6PLS6RVRFVYEP7NX
 #define AGATHIS_6PLS6RVRFVYEP7NX
 /** @file */
 
 #include <stdint.h>
-#if defined (__XC16__)
+#if defined(__XC16__)
 #include <FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
@@ -31,7 +30,7 @@ typedef struct {
     uint16_t type;
 } AG_MC_STATE_t;
 
-extern AG_MC_STATE_t MC;
+extern AG_MC_STATE_t MOD_STATE;
 
 typedef enum {
     MC_NOT_PRESENT,
@@ -49,15 +48,11 @@ typedef struct {
 } AG_MC_SCAN_INFO_t;
 
 #define MC_MAX_CNT 16 /** max number of MCs in the chain, including the local one */
-extern AG_MC_SCAN_INFO_t RmtMC[MC_MAX_CNT - 1];
+extern AG_MC_SCAN_INFO_t REMOTE_MODS[MC_MAX_CNT - 1];
 
-#if defined (__XC16__)
+#if defined(__XC16__)
 extern SemaphoreHandle_t xSemaphore_MMC;
 #endif
-
-void ag_update_pwr(void);
-
-void ag_enable_caps(uint8_t val);
 
 void ag_reset(void);
 

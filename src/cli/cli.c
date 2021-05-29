@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "cli.h"
 #include "cli_types.h"
 

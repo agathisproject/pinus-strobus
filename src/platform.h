@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef PLATFORM_2XL5RPCV8P7A7PGJ
 #define	PLATFORM_2XL5RPCV8P7A7PGJ
 /** @file */

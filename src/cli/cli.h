@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef CLI_YP8GJVG3TCW7BWQW
 #define CLI_YP8GJVG3TCW7BWQW
 /** @file */

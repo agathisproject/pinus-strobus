@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef GPIO_799G4Z42B2HTRMNQ
 #define GPIO_799G4Z42B2HTRMNQ
 /** @file */

@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #ifndef CLI_TYPES_BEES5G972K9T2FRP
 #define CLI_TYPES_BEES5G972K9T2FRP
 /** @file */

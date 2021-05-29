@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "cli_types.h"
 
 #include <stdio.h>
@@ -73,7 +72,7 @@ CliCmdReturn_t ps(ParsedCmd_t *cmdp) {
 CliCmdReturn_t debug(ParsedCmd_t *cmdp) {
     uint8_t buff[8];
 
-    i2c_getRXData(8, buff);
+    i2c_getRXData(1, 8, buff);
     printf("RX: %x %x %x %x %x %x\n", buff[0], buff[1],
            buff[2], buff[3], buff[4], buff[5]);
     return CMD_DONE;
@@ -87,14 +86,14 @@ void _ls_tree(void) {
 
     for (uint8_t i = 1; i < MC_MAX_CNT; i++) {
         printf("  MC %2d:", i);
-        if (RmtMC[i - 1].state == MC_NOT_PRESENT) {
+        if (REMOTE_MODS[i - 1].state == MC_NOT_PRESENT) {
             printf(" -");
-        } else if (RmtMC[i - 1].state == MC_INVALID) {
+        } else if (REMOTE_MODS[i - 1].state == MC_INVALID) {
             printf(" ?");
         } else {
-            //printf(" R%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
+            //printf(" R%d", (REMOTE_MODS[i - 1].pow_rst & MC_CMD_ID_RST_MASK) >>
             //       MC_CMD_ID_RST_OFFS);
-            //printf(" P%d", (RmtMC[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
+            //printf(" P%d", (REMOTE_MODS[i - 1].pow_rst & MC_CMD_ID_PWR_MASK) >>
             //       MC_CMD_ID_PWR_OFFS);
         }
         printf("\n");

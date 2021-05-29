@@ -1,6 +1,5 @@
-/*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 #include "platform.h"
 
 #include "callback.h"
@@ -27,10 +26,14 @@ void gpio_init(void) {
 }
 
 void i2c_init(void) {
-    i2c_initMaster(i2c_getCtrl(0), 100);
-    i2c_initSlave(i2c_getCtrl(1), 100, MC.addr_i2c);
-    i2c_setTXCallback(&tx_i2c2);
-    i2c_setRXCallback(&rx_i2c2);
-    i2c_showCtrl(i2c_getCtrl(0));
-    i2c_showCtrl(i2c_getCtrl(1));
+    i2c_initMaster(0, 100);
+    i2c_setTXCallback(0, NULL);
+    i2c_setTXCallback(0, NULL);
+
+    i2c_initSlave(1, 100, MOD_STATE.addr_i2c);
+    i2c_setTXCallback(1, &tx_i2c1);
+    i2c_setRXCallback(1, &rx_i2c1);
+
+    i2c_showCtrl(0);
+    i2c_showCtrl(1);
 }
