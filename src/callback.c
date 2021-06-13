@@ -33,7 +33,7 @@ void rx_i2c1(I2CXfer_t *i2c_xfer) {
             case AG_CMD_CAP:
                 i2c_setTXByte(1, 0, AG_CMD_CAP_NB);
                 i2c_setTXByte(1, 1, MOD_STATE.caps);
-                i2c_setTXByte(1, 2, MOD_STATE.caps_en);
+                i2c_setTXByte(1, 2, 0x00);
                 break;
             case AG_CMD_MFR:
                 i2c_setTXByte(1, 0, AG_CMD_MFR_NB);
