@@ -6,10 +6,10 @@
 #if defined(__AVR__)
 #include <avr/wdt.h>
 #include "../hw/gpio.h"
-#include "../platform.h"
+#include "../platform/platform.h"
 #elif defined(__XC16__)
 #include "../hw/gpio.h"
-#include "../platform.h"
+#include "../platform/platform.h"
 #elif defined(__linux__) || defined(__MINGW64__)
 #include "stdlib.h"
 #include "sys/stat.h"

@@ -16,7 +16,7 @@
 #include <semphr.h>
 #include <queue.h>
 
-#include "platform.h"
+#include "platform/platform.h"
 #include "agathis/base.h"
 
 void task_mc(void *pvParameters);

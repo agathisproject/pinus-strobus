@@ -6,8 +6,8 @@
 
 #include <stdio.h>
 
-#include "hw/gpio.h"
-#include "hw/i2c.h"
+#include "../hw/gpio.h"
+#include "../hw/i2c.h"
 
 #define PIN_LED_R PIN_RA0
 #define PIN_LED_G PIN_RA1

@@ -2,7 +2,7 @@
 
 #include "callback.h"
 
-#include "agathis/base.h"
+#include "../agathis/base.h"
 
 static uint8_t rx_i2c1_flag = 0;
 static uint8_t rx_i2c1_buff[8] = {0, 0, 0, 0, 0, 0, 0, 0};

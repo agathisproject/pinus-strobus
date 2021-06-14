@@ -52,7 +52,7 @@ static I2CCtrl_t s_I2CCtrl = {0, I2C_ST_INIT, 0, 0, NULL, NULL,
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     0, 0
 };
-static I2CXfer_t s_I2CXfer_cur = {I2C_RD, I2C_XFER_SL_RX, I2C_OPT_NONE, 0, 0};
+static I2CXfer_t s_I2CXfer_cur = {I2C_RD, I2C_XFER_SL_RX, I2C_OPT_NONE, 0, 0, 0};
 
 I2CCtrl_t *p_avr_getCtrl(uint8_t id) {
     if (id != 0) {
@@ -287,22 +287,22 @@ void i2c_showCtrl(uint8_t id) {
 //------------------------------------------------------------------------------
 #if defined(__AVR__)
 /** sets the Start bit and clears the INT bit in the TWI control register. */
-inline void i2c_setSTA() {
+inline void i2c_setSTA(void) {
     TWCR = (_BV(TWINT) | _BV(TWSTA) | _BV(TWEN) | _BV(TWIE));
 }
 
 /** sets the Stop bit and clears the INT bit in the TWI control register. */
-inline void i2c_setSTO() {
+inline void i2c_setSTO(void) {
     TWCR = (_BV(TWINT) | _BV(TWSTO) | _BV(TWEN) | _BV(TWIE));
 }
 
 /** clears the INT bit in the TWI control register. */
-inline void i2c_setNACK() {
+inline void i2c_setNACK(void) {
     TWCR = (_BV(TWINT) | _BV(TWEN) | _BV(TWIE));
 }
 
 /** sets the Acknowledge bit and clears the INT bit in the TWI control register. */
-inline void i2c_setACK() {
+inline void i2c_setACK(void) {
     TWCR = (_BV(TWINT) | _BV(TWEA) | _BV(TWEN) | _BV(TWIE));
 }
 #endif

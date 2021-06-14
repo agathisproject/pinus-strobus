@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "hw/i2c.h"
+#include "../hw/i2c.h"
 
 void tx_i2c1(I2CXfer_t *i2c_xfer);
 void rx_i2c1(I2CXfer_t *i2c_xfer);

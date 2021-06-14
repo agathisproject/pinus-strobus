@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>agathis-mgmt</name>
+            <name>pinus-strobus</name>
             <creation-uuid>867c9975-527b-4cfd-8b05-fc8ac45c26b6</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>

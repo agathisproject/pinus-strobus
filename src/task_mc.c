@@ -7,7 +7,7 @@
 #include <semphr.h>
 #include <queue.h>
 
-#include "callback.h"
+#include "platform/callback.h"
 #include "agathis/base.h"
 
 void scan_tree(void) {
@@ -23,10 +23,10 @@ void scan_tree(void) {
 void task_mc(void *pvParameters) {
     while (1) {
         //scan_tree();
-        if (getRX1() != 0) {
-            printf("cmd\n");
-            clrRX1();
-        }
+//        if (getRX1() != 0) {
+//            printf("cmd\n");
+//            clrRX1();
+//        }
         vTaskDelay(1);
     }
 }
